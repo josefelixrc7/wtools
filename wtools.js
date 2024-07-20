@@ -432,5 +432,43 @@ var wtools =
                 }
             }
         }
-    }    
+    }
+    ,SeverConfigPair: class
+    {
+        constructor(name, value)
+        {
+            this.name = name;
+            this.value = value;
+        }
+    }
+    ,ServerConfig: class
+    {
+        constructor
+        (
+            url_production = new this.SeverConfigPair("localhost", "http://localhost")
+            ,url_development = new this.SeverConfigPair("localhost", "http://localhost")
+            ,api_url = "/api")
+        {
+            this.url_production = url_production.value;
+            this.url_development = url_development.value;
+            this.api_url = `${this.url_production.value}${api_url}`;
+            this.current_host_url = this.url_production.value;
+            
+            switch (window.location.hostname)
+            {
+                case this.url_production.name:
+                    this.api_url = `${this.url_production.value}${this.api_url}`;
+                    this.current_host_url = this.url_production.value;
+                break;
+                case this.url_development.name:
+                    this.api_url = `${this.url_development.value}${this.api_url}`;
+                    this.current_host_url = this.url_development.value;
+                break;
+                case "127.0.0.1":
+                    this.api_url = `${this.url_development.value}${this.api_url}`;
+                    this.current_host_url = this.url_development.value;
+                break;
+            }
+        }
+    }
 };
