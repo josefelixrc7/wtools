@@ -281,7 +281,7 @@ var wtools =
     
         Exec_(callback)
         {
-            let response_data = new ResponseData(false, "", []);
+            let response_data = new wtools.ResponseData(false, "", []);
             this.MakeHTTPRequest()
             .then((response) =>
             {
@@ -698,6 +698,63 @@ var wtools =
                     <p class="ms-4">Espere...</p>
                 </div>
             `);
+        }
+    }
+    ,ElementOptions: class
+    {
+        constructor(identifer, type, read_function = '() => {}', edit_function = '() => {}', delete_function = '() => {}')
+        {
+            this.identifer = identifer;
+            this.type = type;
+            this.read_function = read_function;
+            this.edit_function = edit_function;
+            this.delete_function = delete_function;
+        }
+
+        Basic()
+        {
+            return `
+                <div class="dropdown">
+                    <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="options_dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-ellipsis-v"></i>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="options_dropdown">
+                        <li>
+                            <button
+                                type="button"
+                                class="dropdown-item text-center operation-read"
+                                data-bs-toggle="modal"
+                                data-bs-target="#modal_${this.type}_read"
+                                onclick="${this.read_function}"
+                            >
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </li>
+                        <li>
+                            <button
+                                type="button"
+                                class="dropdown-item text-center operation-edit"
+                                data-bs-toggle="modal"
+                                data-bs-target="#modal_${this.type}_edit"
+                                onclick="${this.edit_function}"
+                            >
+                                <i class="fas fa-pen"></i>
+                            </button>
+                        </li>
+                        <li>
+                            <button
+                                type="button"
+                                class="dropdown-item text-center operation-delete"
+                                data-bs-toggle="modal"
+                                data-bs-target="#modal_${this.type}_delete"
+                                onclick="${this.delete_function}"
+                            >
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            `;
         }
     }
 };
