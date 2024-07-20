@@ -486,4 +486,176 @@ var wtools =
             }
         }
     }
+    ,UIElement: class
+    {
+        constructor(type, editable, name, value, text_name, extra_value = '')
+        {
+            this.type = type;
+            this.editable = editable;
+            this.name = name;
+            this.value = value;
+            this.text_name = text_name;
+            this.extra_value = extra_value;
+    
+            this.types = 
+            [
+                'text'
+                ,'input-text'
+                ,'input-date'
+                ,'option'
+                ,'image'
+                ,'input-image'
+            ];
+    
+            this.VerifyType();
+        }
+    
+        VerifyType()
+        {
+            if(!this.types.find(element => element == this.type))
+                this.type = 'text';
+        }
+    }
+    ,UIElementsCreator: class
+    {
+        constructor(elements)
+        {
+            this.elements = elements;
+            this.final_elements = new Array();
+        }
+    
+        ProcessType(element)
+        {
+            switch(element.type)
+            {
+                case 'text':
+                    return this.CreateText(element);
+                    break;
+                case 'input-text':
+                    return this.CreateInputText(element);
+                    break;
+                case 'option':
+                    return this.CreateOption(element);
+                    break;
+                case 'image':
+                    return this.CreateImage(element);
+                    break;
+                case 'input-image':
+                    return this.CreateInputImage(element);
+                    break;
+            }
+        }
+    
+        CreateElements()
+        {
+            for(let element of this.elements)
+            {
+                this.final_elements.push
+                ({
+                    element: this.ProcessType(element)
+                    ,properties: element
+                });
+            }
+        }
+    
+        CreateText(element)
+        {
+            return `<span>${element.value}</span>`;
+        }
+        CreateInputText(element)
+        {
+            return `<input class="form-control" type="text" name="${element.name}" value="${element.value}" placeholder="${element.text_name}">`;
+        }
+        CreateOption(element)
+        {
+            return `<option value="${element.value[0]}">${element.value[1]}</option>`;
+        }
+        CreateImage(element)
+        {
+            if(element.value != undefined && element.value != '')
+                return `<img src="/uploaded-files/${element.value}" alt="${element.name}" width="100px">`;
+            else
+                return `<img src="${element.extra_value}" alt="" width="100px">`;
+        }
+        CreateInputImage(element)
+        {
+            if(element.value != undefined && element.value != '')
+            {
+                return `
+                    <input class="form-control" type="file" name="${element.name}" placeholder="${element.text_name}">
+                    <img class="mt-2" src="/uploaded-files/${element.value}" alt="${element.value}" width="100px">
+                `;
+            }
+            else
+            {
+                return `
+                    <input class="form-control" type="file" name="${element.name}" placeholder="${element.text_name}">
+                    <img class="mt-2" src="${element.extra_value}" alt="" width="100px">
+                `;
+            }
+        }
+    }
+    ,UILayerData: class
+    {
+        constructor(data, template_elements, identifier = 0)
+        {
+            this.data = data;
+            this.template_elements = template_elements;
+            this.identifier = identifier;
+    
+            this.final_elements = new Array();
+        }
+    
+        CreateStructure()
+        {
+            for(let results_row of this.data.results)
+            {
+                let fields = new Array();
+    
+                for(let subkey in results_row)
+                {
+                    fields.push(new UIElement
+                    (
+                        this.template_elements[subkey].type
+                        ,this.template_elements[subkey].editable
+                        ,this.template_elements[subkey].name
+                        ,results_row[subkey]
+                        ,this.template_elements[subkey].text_name
+                        ,this.template_elements[subkey].extra_value
+                    ));
+                }
+    
+                let result = new UIElementsCreator(fields);
+                result.CreateElements();
+                this.final_elements.push(result.final_elements);
+            }
+        }
+        CreateUnitedStructure()
+        {
+            for(let results_row of this.data.results)
+            {
+                let fields = new Array();
+                let values = new Array();
+    
+                for(let subkey in results_row)
+                {
+                    values.push(results_row[subkey]);
+                }
+    
+                fields.push(new UIElement
+                (
+                    this.template_elements[0].type
+                    ,this.template_elements[0].editable
+                    ,this.template_elements[0].name
+                    ,values
+                    ,this.template_elements[0].text_name
+                    ,this.template_elements[0].extra_value
+                ));
+    
+                let result = new UIElementsCreator(fields);
+                result.CreateElements();
+                this.final_elements.push(result.final_elements);
+            }
+        }
+    }
 };
