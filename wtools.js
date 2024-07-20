@@ -471,4 +471,19 @@ var wtools =
             }
         }
     }
+    ,PassToForm: class
+    {
+        constructor(form, identifier, value, html = false)
+        {
+            let element = $(form).find(identifier);
+        
+            if(element != undefined)
+            {
+                if(html)
+                    element[0].innerText = value;
+                else
+                    element[0].value = value;
+            }
+        }
+    }
 };
