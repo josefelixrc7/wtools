@@ -85,4 +85,23 @@ var wtools =
             $(this.element).html(this.text_original);
         }
     }
+    ,FormChecker: class
+    {
+        constructor(form)
+        {
+            this.form = form;
+            this.validity = true;
+        }
+        Check_ = () =>
+        {
+            if (!$(this.form).checkValidity())
+            {
+                this.validity = false;
+            }
+        
+            $(this.form).addClass('was-validated')
+        
+            return this.validity;
+        }
+    }
 };
