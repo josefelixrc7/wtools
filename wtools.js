@@ -445,28 +445,33 @@ var wtools =
     {
         constructor
         (
-            url_production = new this.SeverConfigPair("localhost", "http://localhost")
-            ,url_development = new this.SeverConfigPair("localhost", "http://localhost")
-            ,api_url = "/api")
+            url_production = new wtools.SeverConfigPair("localhost", "http://localhost")
+            ,url_development = new wtools.SeverConfigPair("localhost", "http://localhost")
+            ,api_url = "/api"
+        )
         {
             this.url_production = url_production.value;
             this.url_development = url_development.value;
-            this.api_url = `${this.url_production.value}${api_url}`;
-            this.current_host_url = this.url_production.value;
+            this.api_url = api_url;
+            this.current = 
+            {
+                host: `${this.url_production}`
+                ,api: `${this.url_production}${this.api_url}`
+            }
             
             switch (window.location.hostname)
             {
                 case this.url_production.name:
-                    this.api_url = `${this.url_production.value}${this.api_url}`;
-                    this.current_host_url = this.url_production.value;
+                    this.current.host = `${this.url_production}`;
+                    this.current.api = `${this.url_production}${this.api_url}`;
                 break;
                 case this.url_development.name:
-                    this.api_url = `${this.url_development.value}${this.api_url}`;
-                    this.current_host_url = this.url_development.value;
+                    this.current.host = `${this.url_development}`;
+                    this.current.api = `${this.url_development}${this.api_url}`;
                 break;
-                case "127.0.0.1":
-                    this.api_url = `${this.url_development.value}${this.api_url}`;
-                    this.current_host_url = this.url_development.value;
+                default:
+                    this.current.host = `${this.url_development}`;
+                    this.current.api = `${this.url_development}${this.api_url}`;
                 break;
             }
         }
