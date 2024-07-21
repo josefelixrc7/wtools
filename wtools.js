@@ -40,8 +40,7 @@ var wtools =
             return data.join("\n");
         }
     }
-    ,
-    ElementState: class
+    ,ElementState: class
     {
         constructor(element, active, type, text_to_change)
         {
@@ -94,7 +93,7 @@ var wtools =
         }
         Check_ = () =>
         {
-            if (!$(this.form).checkValidity())
+            if (!$(this.form)[0].checkValidity())
             {
                 this.validity = false;
             }
@@ -194,7 +193,7 @@ var wtools =
         }
         Show_ = (message) =>
         {
-            let type = new NotificationType;
+            let type = new wtools.NotificationType;
             switch(this.notification_type)
             {
                 case type.SUCCESS:
@@ -529,7 +528,7 @@ var wtools =
             
             this.for_page = 
             $(`
-                <div class="d-flex justify-content-center align-items-center position-fixed top-0 w-100 h-100 bg-white" style="z-index: 1000;">
+                <div class="d-flex justify-content-center align-items-center position-fixed top-0 w-100 h-100 bg-white" style="z-index: 100000;">
                     <div class="spinner-border" role="status">
                     </div>
                     <p class="ms-4">Espere...</p>
