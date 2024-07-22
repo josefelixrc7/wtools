@@ -246,7 +246,7 @@ var wtools =
     }
     ,Request: class
     {
-        constructor(endpoint = '', method = 'GET', data = {}, stringify = true)
+        constructor(endpoint = '', method = 'GET', data = undefined, stringify = false)
         {
             this.endpoint = endpoint;
             this.method = method;
@@ -302,7 +302,8 @@ var wtools =
     
         async GETRequest_()
         {
-            const response = await fetch(`${this.endpoint}?json=${JSON.stringify(this.data)}`
+            const json_string = this.stringify ? "?json=" + JSON.stringify(this.data) : "";
+            const response = await fetch(this.endpoint + json_string
             ,{
                 method: 'GET'
                 ,mode: 'cors'
@@ -356,8 +357,6 @@ var wtools =
                 ,credentials: 'same-origin'
                 ,redirect: 'follow'
                 ,referrerPolicy: 'no-referrer'
-                ,headers: (this.stringify ? {'Content-Type': 'application/json'} : {})
-                ,body: (this.stringify ? JSON.stringify(this.data) : this.data)
             });
             return response;
         }
