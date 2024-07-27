@@ -535,4 +535,46 @@ var wtools =
             `);
         }
     }
+    ,OptionValue: class
+    {
+        constructor(value, option, selected = false)
+        {
+            this.value = value;
+            this.option = option;
+            this.selected = selected;
+        }
+    }
+    ,SelectOptions: class
+    {
+        constructor(options = new Array)
+        {
+            this.options = options;
+        }
+        Build_(target)
+        {
+            for(const option of this.options)
+            {
+                if(option.selected)
+                    $(target).append($(`<option value="${option.value}" selected>${option.option}</option>`));
+                else
+                    $(target).append($(`<option value="${option.value}">${option.option}</option>`));
+            }
+        }
+        ValueToOption_(value)
+        {
+            for(const option of this.options)
+            {
+                if(option.value == value)
+                    return option.option;
+            }
+        }
+        OptionToValue_(option_name)
+        {
+            for(const option of this.options)
+            {
+                if(option.option == option_name)
+                    return option.value;
+            }
+        }
+    }
 };
