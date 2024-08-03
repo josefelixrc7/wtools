@@ -42,46 +42,40 @@ var wtools =
     }
     ,ElementState: class
     {
-        constructor(element, active, type, text_to_change)
+        constructor(element, change = false, type = "button", content_to_change = "")
         {
             this.element = element;
-            this.active = active;
+            this.change = change;
             this.type = type;
-            this.text_to_change = text_to_change;
-            this.text_original = $(element).text();
+            this.content_to_change = content_to_change;
+            this.original_content = $(element).html();
+            this.active = false;
     
-            if(active) this.On_();
-            else this.Off_();
-        }
-        Change_ = () =>
-        {
-            if(this.active)
-                this.Off_();
-            else
-                this.On_();
+            this.On_();
         }
         On_ = () =>
         {
             this.active = true;
     
-            if(this.type == "button")
+            if(this.type == "button" && this.change == true)
                 $(this.element).attr('disabled', '');
-            else if(this.type == "block")
+            else if(this.type == "block" && this.change == true)
                 $(this.element).removeClass('d-none');
     
             $(this.element).html('');
-            $(this.element).append(this.text_to_change);
+            $(this.element).append(this.content_to_change);
         }
         Off_ = () =>
         {
             this.active = false;
+            console.log(this.change)
     
-            if(this.type == "button")
+            if(this.type == "button" && this.change == true)
                 $(this.element).removeAttr('disabled');
-            else if(this.type == "block")
+            else if(this.type == "block" && this.change == true)
                 $(this.element).addClass('d-none');
     
-            $(this.element).html(this.text_original);
+            $(this.element).html(this.original_content);
         }
     }
     ,FormChecker: class
