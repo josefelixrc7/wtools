@@ -68,7 +68,6 @@ var wtools =
         Off_ = () =>
         {
             this.active = false;
-            console.log(this.change)
     
             if(this.type == "button" && this.change == true)
                 $(this.element).removeAttr('disabled');
