@@ -570,4 +570,11 @@ var wtools =
             }
         }
     }
+    ,IFUndefined: function(val1, val2)
+    {
+        if(val1 == undefined)
+            return val2;
+        else
+            return val1;
+    }
 };
