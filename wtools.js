@@ -487,7 +487,11 @@ var wtools =
         {
             for(let row of this.data)
             {
-                $(this.target).append(callback_creator(row));
+                const results = callback_creator(row);
+                if (results == undefined)
+                    continue;
+                else
+                    $(this.target).append(results);
             }
         }
     }
