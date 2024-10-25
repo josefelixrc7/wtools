@@ -116,7 +116,8 @@ var wtools =
             for(let menu of $(this.menu + " a"))
             {
                 let menu_target = $(menu).attr('menu');
-                this.menus.push(menu_target);
+                if(menu_target != undefined)
+                    this.menus.push(menu_target);
             }
     
             if(window.location.hash != "")
