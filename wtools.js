@@ -582,4 +582,12 @@ var wtools =
         else
             return val1;
     }
+    ,CleanForm: function(form)
+    {
+        $(':input',form)
+            .not(':button, :submit, :reset, :hidden')
+            .val('')
+            .prop('checked', false)
+            .prop('selected', false);
+    }
 };
