@@ -550,6 +550,7 @@ var wtools =
         }
         Build_(target)
         {
+            $(target).html('');
             for(const option of this.options)
             {
                 if(option.selected)
