@@ -585,7 +585,8 @@ var wtools =
     }
     ,CleanForm: function(form)
     {
-        $(':input',form)
+        $(form).removeClass('was-validated');
+        $(':input', $(form))
             .not(':button, :submit, :reset, :hidden')
             .val('')
             .prop('checked', false)
