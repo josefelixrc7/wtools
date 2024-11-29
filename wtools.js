@@ -293,6 +293,24 @@ var wtools =
                 callback(response_data);
             });
         }
+
+        ExecPlain_(callback)
+        {
+            let response_data = new wtools.ResponseData(false, "", []);
+            this.MakeHTTPRequest()
+            .then((response) =>
+            {
+                response_data.status = response.status;
+                response_data.body = response.body;
+                callback(response_data);
+            })
+            .catch(error =>
+            {
+                response_data.error = true;
+                response_data.body = error;
+                callback(response_data);
+            });
+        }
     
         async GETRequest_()
         {
