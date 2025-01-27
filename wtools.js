@@ -610,4 +610,9 @@ var wtools =
             .prop('checked', false)
             .prop('selected', false);
     }
+    ,GetUrlSearchParam: function(param)
+    {
+        let urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(param);
+    }
 };
