@@ -178,15 +178,19 @@ var wtools =
     }
     ,Notification: class
     {
-        constructor(notification_type, time = 5000, element = '#notifications')
+        constructor(notification_type, time = 5000, element = '#notifications', clean = false)
         {
             this.notification_type = notification_type;
             this.time = time;
             this.element = element;
+            this.clean = clean;
             this.notification = '';
         }
         Show_ = (message) =>
         {
+            if(this.clean)
+                $(this.element).html('');
+            
             let type = new wtools.NotificationType;
             switch(this.notification_type)
             {
