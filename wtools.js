@@ -267,8 +267,10 @@ var wtools =
                     result = this.PUTRequest_();
                     break;
                 case "DEL":
-                case "DELETE":
                     result = this.DELRequest_();
+                    break;
+                case "DELETE":
+                    result = this.DELETERequest_();
                     break;
                 default:
                     result = this.GETRequest_();
@@ -365,6 +367,20 @@ var wtools =
         }
     
         async DELRequest_()
+        {
+            const response = await fetch(`${this.endpoint}`
+            ,{
+                method: 'DEL'
+                ,mode: 'cors'
+                ,cache: 'no-cache'
+                ,credentials: 'same-origin'
+                ,redirect: 'follow'
+                ,referrerPolicy: 'no-referrer'
+            });
+            return response;
+        }
+
+        async DELETERequest_()
         {
             const response = await fetch(`${this.endpoint}`
             ,{
