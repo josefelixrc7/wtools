@@ -384,7 +384,7 @@ var wtools =
         {
             const response = await fetch(`${this.endpoint}`
             ,{
-                method: 'DEL'
+                method: 'DELETE'
                 ,mode: 'cors'
                 ,cache: 'no-cache'
                 ,credentials: 'same-origin'
