@@ -267,6 +267,7 @@ var wtools =
                     result = this.PUTRequest_();
                     break;
                 case "DEL":
+                case "DELETE":
                     result = this.DELRequest_();
                     break;
                 default:
