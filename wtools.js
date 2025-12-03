@@ -572,6 +572,22 @@ var wtools =
             `);
         }
     }
+    ,FullScreenMessage: class
+    {
+        constructor(message = "")
+        {
+            this.message = 
+            $(`
+                <div class="d-flex justify-content-center align-items-center position-fixed top-0 w-100 h-100 bg-white" style="z-index: 100000;">
+                    <h4 class="ms-4 fw-bold">${message}</h4>
+                </div>
+            `);
+        }
+        Get_()
+        {
+            return this.message;
+        }
+    }
     ,OptionValue: class
     {
         constructor(value, option, selected = false)
