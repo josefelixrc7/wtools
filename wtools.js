@@ -404,6 +404,26 @@ var wtools =
             return response;
         }
     }
+    ,StepperFunctions: class
+    {
+        constructor(steps)
+        {
+            this.steps = steps;
+            this.current_step = -1;
+        }
+        Next_()
+        {
+            try
+            {
+                this.current_step += 1;
+                this.steps[this.current_step]();
+            }
+            catch(error)
+            {
+                console.error(error);
+            }
+        }
+    }
     ,SearchElements: class
     {
         constructor(elements, search_in_element)
