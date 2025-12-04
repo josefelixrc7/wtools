@@ -250,6 +250,16 @@ var wtools =
             this.method = method;
             this.data = data;
             this.stringify = stringify;
+            this.mode = 'cors';
+            this.cache = 'no-cache';
+            this.credentials = 'same-origin';
+            this.redirect = 'follow';
+            this.referrerPolicy = 'no-referrer';
+            if (stringify)
+                this.headers = {'Content-Type': 'application/json'};
+            else
+                this.headers = {};
+            this.body = "";
         }
     
         async MakeHTTPRequest()
@@ -258,31 +268,31 @@ var wtools =
             switch(this.method)
             {
                 case "GET":
-                    result = this.GETRequest_();
+                    result = await this.GETRequest_();
                     break;
                 case "POST":
-                    result = this.POSTRequest_();
+                    result = await this.POSTRequest_();
                     break;
                 case "PUT":
-                    result = this.PUTRequest_();
+                    result = await this.PUTRequest_();
                     break;
                 case "DEL":
-                    result = this.DELRequest_();
+                    result = await this.DELRequest_();
                     break;
                 case "DELETE":
-                    result = this.DELETERequest_();
+                    result = await this.DELETERequest_();
                     break;
                 default:
-                    result = this.GETRequest_();
+                    result = await this.GETRequest_();
                     break;
             }
             return result;
         }
     
-        Exec_(callback)
+        async Exec_(callback)
         {
             let response_data = new wtools.ResponseData(false, "", []);
-            this.MakeHTTPRequest()
+            await this.MakeHTTPRequest()
             .then((response) =>
             {
                 response_data.status = response.status;
@@ -301,10 +311,10 @@ var wtools =
             });
         }
 
-        ExecPlain_(callback)
+        async ExecPlain_(callback)
         {
             let response_data = new wtools.ResponseData(false, "", []);
-            this.MakeHTTPRequest()
+            await this.MakeHTTPRequest()
             .then((response) =>
             {
                 response_data.status = response.status;
@@ -325,11 +335,11 @@ var wtools =
             const response = await fetch(this.endpoint + json_string
             ,{
                 method: 'GET'
-                ,mode: 'cors'
-                ,cache: 'no-cache'
-                ,credentials: 'same-origin'
-                ,redirect: 'follow'
-                ,referrerPolicy: 'no-referrer'
+                ,mode: this.mode
+                ,cache: this.cache
+                ,credentials: this.credentials
+                ,redirect: this.redirect
+                ,referrerPolicy: this.referrerPolicy
             });
             return response;
         }
@@ -339,12 +349,12 @@ var wtools =
             const response = await fetch(`${this.endpoint}`
             ,{
                 method: 'POST'
-                ,mode: 'cors'
-                ,cache: 'no-cache'
-                ,credentials: 'same-origin'
-                ,redirect: 'follow'
-                ,referrerPolicy: 'no-referrer'
-                ,headers: (this.stringify ? {'Content-Type': 'application/json'} : {})
+                ,mode: this.mode
+                ,cache: this.cache
+                ,credentials: this.credentials
+                ,redirect: this.redirect
+                ,referrerPolicy: this.referrerPolicy
+                ,headers: this.headers
                 ,body: (this.stringify ? JSON.stringify(this.data) : this.data)
             });
             return response;
@@ -355,12 +365,12 @@ var wtools =
             const response = await fetch(`${this.endpoint}`
             ,{
                 method: 'PUT'
-                ,mode: 'cors'
-                ,cache: 'no-cache'
-                ,credentials: 'same-origin'
-                ,redirect: 'follow'
-                ,referrerPolicy: 'no-referrer'
-                ,headers: (this.stringify ? {'Content-Type': 'application/json'} : {})
+                ,mode: this.mode
+                ,cache: this.cache
+                ,credentials: this.credentials
+                ,redirect: this.redirect
+                ,referrerPolicy: this.referrerPolicy
+                ,headers: this.headers
                 ,body: (this.stringify ? JSON.stringify(this.data) : this.data)
             });
             return response;
@@ -371,11 +381,11 @@ var wtools =
             const response = await fetch(`${this.endpoint}`
             ,{
                 method: 'DEL'
-                ,mode: 'cors'
-                ,cache: 'no-cache'
-                ,credentials: 'same-origin'
-                ,redirect: 'follow'
-                ,referrerPolicy: 'no-referrer'
+                ,mode: this.mode
+                ,cache: this.cache
+                ,credentials: this.credentials
+                ,redirect: this.redirect
+                ,referrerPolicy: this.referrerPolicy
             });
             return response;
         }
@@ -385,11 +395,11 @@ var wtools =
             const response = await fetch(`${this.endpoint}`
             ,{
                 method: 'DELETE'
-                ,mode: 'cors'
-                ,cache: 'no-cache'
-                ,credentials: 'same-origin'
-                ,redirect: 'follow'
-                ,referrerPolicy: 'no-referrer'
+                ,mode: this.mode
+                ,cache: this.cache
+                ,credentials: this.credentials
+                ,redirect: this.redirect
+                ,referrerPolicy: this.referrerPolicy
             });
             return response;
         }
