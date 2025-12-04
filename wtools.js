@@ -1,4 +1,9 @@
 
+/*
+    wtools.js
+    version: v0.0.1
+*/
+
 var wtools =
 {
     CSVOperator: class
