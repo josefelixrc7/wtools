@@ -1,7 +1,7 @@
 
 /*
     wtools.js
-    version: v0.0.1
+    version: v0.0.2
 */
 
 var wtools =
@@ -191,7 +191,7 @@ var wtools =
             this.clean = clean;
             this.notification = '';
         }
-        Show_ = (message) =>
+        Show_ = (message, close = true) =>
         {
             if(this.clean)
                 $(this.element).html('');
@@ -203,7 +203,6 @@ var wtools =
                     this.notification = $(`
                         <div class="alert alert-success alert-dismissible fade show" role="alert">
                             ${message}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     `);
                     break;
@@ -211,7 +210,6 @@ var wtools =
                     this.notification = $(`
                         <div class="alert alert-warning alert-dismissible fade show" role="alert">
                             ${message}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     `);
                     break;
@@ -219,13 +217,20 @@ var wtools =
                     this.notification = $(`
                         <div class="alert alert-danger alert-dismissible fade show" role="alert">
                             ${message}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     `);
                     break;
             }
+
+            if(close)
+                $(this.notification).append('<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>');
+
             $(this.element).append(this.notification);
             this.Timeout_();
+        }
+        ShowNoClose_(message)
+        {
+            this.Show_(message, false);
         }
         Timeout_()
         {
