@@ -315,9 +315,7 @@ var wtools =
             })
             .catch(error =>
             {
-                response_data.error = true;
-                response_data.body = error;
-                callback(response_data);
+                console.error(error);
             });
         }
 
@@ -333,9 +331,7 @@ var wtools =
             })
             .catch(error =>
             {
-                response_data.error = true;
-                response_data.body = error;
-                callback(response_data);
+                console.error(error);
             });
         }
     
