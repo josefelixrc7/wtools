@@ -270,6 +270,7 @@ var wtools =
             else
                 this.headers = {};
             this.body = "";
+            this.refs = {};
         }
     
         async MakeHTTPRequest()
