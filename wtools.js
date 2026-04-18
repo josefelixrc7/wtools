@@ -320,6 +320,24 @@ var wtools =
             });
         }
 
+        async Exec_()
+        {
+            let response_data = new wtools.ResponseData(false, "", []);
+            
+            try {
+                const response = await this.MakeHTTPRequest();
+                
+                response_data.status = response.status;
+                
+                response_data.body = await response.json();
+                
+            } catch (error) {
+                console.error("HTTP Request Error:", error);
+            }
+            
+            return response_data;
+        }
+
         async ExecPlain_(callback)
         {
             let response_data = new wtools.ResponseData(false, "", []);
